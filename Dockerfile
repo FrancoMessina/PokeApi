@@ -1,5 +1,5 @@
 FROM amazoncorretto:18-alpine-jdk
 
-COPY target/POKEDEX-0.0.1-SNAPSHOT.jar app.jar
+COPY POKEDEX/target/POKEDEX-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "/app.jar"]
