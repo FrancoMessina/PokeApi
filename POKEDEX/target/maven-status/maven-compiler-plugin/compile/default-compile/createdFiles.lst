@@ -1,4 +1,5 @@
 com\pokeapi\POKEDEX\model\PokemonType.class
+com\pokeapi\POKEDEX\Utils\Util.class
 com\pokeapi\POKEDEX\model\Pokemon.class
 com\pokeapi\POKEDEX\service\IPokemonService.class
 com\pokeapi\POKEDEX\model\Move.class

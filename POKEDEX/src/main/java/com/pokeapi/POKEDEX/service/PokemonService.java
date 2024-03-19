@@ -34,9 +34,7 @@ public class PokemonService implements IPokemonService {
         String url = pokeApiBaseUrl + "/pokemon/" + name;
         ResponseEntity<PokemonDetails> responseEntity = restTemplate.getForEntity(url, PokemonDetails.class);
         if (responseEntity.getBody() != null) {
-            // Obtener la descripción en español utilizando los detalles del Pokémon
             String descriptionSpanish = this.getDescriptionSpanish(responseEntity.getBody());
-            // Establecer la descripción en español en los detalles del Pokémon
             responseEntity.getBody().setDescription(descriptionSpanish);
             responseEntity.getBody().setPhotoUrl();
         }
@@ -45,6 +43,9 @@ public class PokemonService implements IPokemonService {
     public Pokemon getPokemon(String name) {
         String url = pokeApiBaseUrl + "/pokemon/" + name;
         ResponseEntity<Pokemon> responseEntity = restTemplate.getForEntity(url, Pokemon.class);
+        if (responseEntity.getBody() != null) {
+            responseEntity.getBody().setPhotoUrl();
+        }
         return Optional.ofNullable(responseEntity.getBody()).orElse(new Pokemon());
     }
 
@@ -56,12 +57,20 @@ public class PokemonService implements IPokemonService {
         pokemon.getTypes().forEach(type -> description.append(type.getType().getName()).append(" "));
         return description.toString();
     }
-    public Page<PokemonDetails> getAllPokemon(int page, int size) {
-        String url = "https://pokeapi.co/api/v2/pokemon?offset=" + (page - 1) * size + "&limit=" + size;
+    public Page<PokemonDetails> getAllPokemonDetails(int page, int size) {
+        String url = pokeApiBaseUrl+"/pokemon?offset=" + (page - 1) * size + "&limit=" + size;
         ResponseEntity<PokemonListResponse> responseEntity = restTemplate.getForEntity(url, PokemonListResponse.class);
         PokemonListResponse pokemonListResponse = responseEntity.getBody();
         assert pokemonListResponse != null;
         List<PokemonDetails> pokemons = pokemonListResponse.getResults().stream().map(pokemonInfo -> this.getPokemonDetails(pokemonInfo.getName())).toList();
+        return new PageImpl<>(pokemons, PageRequest.of(page - 1, size), pokemonListResponse.getCount());
+    }
+    public Page<Pokemon> getAllPokemon(int page, int size) {
+        String url = pokeApiBaseUrl+"/pokemon?offset=" + (page - 1) * size + "&limit=" + size;
+        ResponseEntity<PokemonListResponse> responseEntity = restTemplate.getForEntity(url, PokemonListResponse.class);
+        PokemonListResponse pokemonListResponse = responseEntity.getBody();
+        assert pokemonListResponse != null;
+        List<Pokemon> pokemons = pokemonListResponse.getResults().stream().map(pokemonInfo -> this.getPokemon(pokemonInfo.getName())).toList();
         return new PageImpl<>(pokemons, PageRequest.of(page - 1, size), pokemonListResponse.getCount());
     }
 }

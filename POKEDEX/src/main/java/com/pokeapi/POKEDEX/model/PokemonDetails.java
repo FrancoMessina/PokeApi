@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pokeapi.POKEDEX.Utils.Util;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -24,7 +25,7 @@ public class PokemonDetails {
     private String photoUrl;
 
     public void setPhotoUrl(){
-        this.photoUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/"+this.id+".png";
+        this.photoUrl =   Util.URL_IMG +this.id+Util.IMG_PNG;
     }
 
 }
