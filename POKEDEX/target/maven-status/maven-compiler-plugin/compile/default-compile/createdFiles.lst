@@ -1,0 +1,16 @@
+com\pokeapi\POKEDEX\model\PokemonType.class
+com\pokeapi\POKEDEX\model\Pokemon.class
+com\pokeapi\POKEDEX\service\IPokemonService.class
+com\pokeapi\POKEDEX\model\Move.class
+com\pokeapi\POKEDEX\PokedexApplication.class
+com\pokeapi\POKEDEX\model\PokemonDetails.class
+com\pokeapi\POKEDEX\model\PokemonInfo.class
+com\pokeapi\POKEDEX\controller\PokemonController.class
+com\pokeapi\POKEDEX\model\PokemonMove.class
+com\pokeapi\POKEDEX\exception\PokemonNotFoundException.class
+com\pokeapi\POKEDEX\service\PokemonService.class
+com\pokeapi\POKEDEX\model\Ability.class
+com\pokeapi\POKEDEX\model\PokemonListResponse.class
+com\pokeapi\POKEDEX\model\Type.class
+com\pokeapi\POKEDEX\model\PokemonAbility.class
+com\pokeapi\POKEDEX\configuration\AppConfig.class
