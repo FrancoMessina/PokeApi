@@ -6,6 +6,7 @@ import com.pokeapi.POKEDEX.model.PokemonListResponse;
 import com.pokeapi.POKEDEX.service.PokemonService;
 import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,13 +20,25 @@ public class PokemonController {
 
 
     @GetMapping("/details/{name}")
-    public PokemonDetails getPokemonDetails(@PathVariable String name) {
+    public ResponseEntity<?> getPokemonDetails(@PathVariable String name) {
         PokemonDetails poke =  pokemonService.getPokemonDetails(name.toLowerCase());
-        return poke;
+        if(poke != null){
+            return ResponseEntity.ok(poke); //Devuelve el PokemonDetails si se encuentra
+        } else {
+            //Devuelve un ResponseEntity con un mensaje de error si el Pokemon no se encuentra
+            String mensaje = "No se encontró el Pokémon: " + name;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
+        }
+
     }
     @GetMapping("/{name}")
-    public Pokemon getPokemon(@PathVariable String name) {
-        return pokemonService.getPokemon(name.toLowerCase());
+    public ResponseEntity<?> getPokemon(@PathVariable String name) {
+        Pokemon poke =  pokemonService.getPokemon(name.toLowerCase());
+        if(poke != null){
+            return ResponseEntity.ok(poke);
+        }
+        String mensaje = "No se encontró el Pokémon: " + name;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
     }
 
 

@@ -34,11 +34,12 @@ public class PokemonService implements IPokemonService {
         String url = pokeApiBaseUrl + "/pokemon/" + name;
         ResponseEntity<PokemonDetails> responseEntity = restTemplate.getForEntity(url, PokemonDetails.class);
         if (responseEntity.getBody() != null) {
+
             String descriptionSpanish = this.getDescriptionSpanish(responseEntity.getBody());
             responseEntity.getBody().setDescription(descriptionSpanish);
             responseEntity.getBody().setPhotoUrl();
         }
-        return Optional.ofNullable(responseEntity.getBody()).orElse(new PokemonDetails());
+        return responseEntity.getBody();
     }
     public Pokemon getPokemon(String name) {
         String url = pokeApiBaseUrl + "/pokemon/" + name;
@@ -46,7 +47,7 @@ public class PokemonService implements IPokemonService {
         if (responseEntity.getBody() != null) {
             responseEntity.getBody().setPhotoUrl();
         }
-        return Optional.ofNullable(responseEntity.getBody()).orElse(new Pokemon());
+        return responseEntity.getBody();
     }
 
     private String getDescriptionSpanish(PokemonDetails pokemon) {
