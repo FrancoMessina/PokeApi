@@ -15,3 +15,4 @@ com\pokeapi\POKEDEX\model\PokemonListResponse.class
 com\pokeapi\POKEDEX\model\Type.class
 com\pokeapi\POKEDEX\model\PokemonAbility.class
 com\pokeapi\POKEDEX\configuration\AppConfig.class
+com\pokeapi\POKEDEX\configuration\WebConfig.class
