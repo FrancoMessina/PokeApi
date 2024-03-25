@@ -5,6 +5,7 @@ import com.pokeapi.POKEDEX.model.Pokemon;
 import com.pokeapi.POKEDEX.model.PokemonDetails;
 import com.pokeapi.POKEDEX.model.PokemonInfo;
 import com.pokeapi.POKEDEX.model.PokemonListResponse;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -66,6 +67,7 @@ public class PokemonService implements IPokemonService {
         List<PokemonDetails> pokemons = pokemonListResponse.getResults().stream().map(pokemonInfo -> this.getPokemonDetails(pokemonInfo.getName())).toList();
         return new PageImpl<>(pokemons, PageRequest.of(page - 1, size), pokemonListResponse.getCount());
     }
+    @Cacheable
     public Page<Pokemon> getAllPokemon(int page, int size) {
         String url = pokeApiBaseUrl+"/pokemon?offset=" + (page - 1) * size + "&limit=" + size;
         ResponseEntity<PokemonListResponse> responseEntity = restTemplate.getForEntity(url, PokemonListResponse.class);
